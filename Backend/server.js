@@ -40,6 +40,31 @@ app.get("/data", async (req, res) => {
     }
 })
 
+app.get("/:searchValue", async (req, res) => {
+    try {
+        const spreadsheetId = "1515_6T0FgnIY-cz5vVVxnnUpSmas7jsn8ECJ7RqdjvA"
+        const range = "Tab1!A:K"
+
+        const searchValue = req.params.searchValue
+        const response = await sheets.spreadsheets.values.get({
+            spreadsheetId,
+            range,
+        })
+
+        const rows = response.data.values
+        const filteredRow = rows.find(row => row.includes(searchValue))
+
+        if (filteredRow) {
+            res.json(filteredRow);
+        } else {
+            res.status(404).json({ message: "Row not found" })
+        }
+    } catch (error) {
+        console.error("Error retrieving data:", error)
+        res.status(500).send("Error retrieving data")
+    }
+})
+
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`)
 })
