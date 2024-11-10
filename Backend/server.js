@@ -1,9 +1,10 @@
 import express from "express"
-import cors from "cors"
 import { google } from "googleapis"
-import { GoogleAuth } from "google-auth-library"
+import cors from "cors"
 import dotenv from "dotenv"
 dotenv.config()
+import { GoogleAuth } from "google-auth-library"
+
 
 const app = express()
 const port = 5000
@@ -34,6 +35,33 @@ app.get("/data", async (req, res) => {
         } else {
             res.status(404).json({ message: "Data not found" })
         }
+    } catch (error) {
+        console.error("Error retrieving data:", error)
+        res.status(500).send("Error retrieving data")
+    }
+})
+
+app.get("/historical", async (req, res) => {
+    try {
+        const spreadsheetId = "1515_6T0FgnIY-cz5vVVxnnUpSmas7jsn8ECJ7RqdjvA"
+        const range = "Tab2!A:B"
+        let response
+
+        for (let attempt = 0; attempt < 3; attempt++) {
+            response = await sheets.spreadsheets.values.get({
+                spreadsheetId,
+                range,
+            })
+
+            const rows = response.data.values
+
+            if (rows && rows[0] && rows[0][0] !== '') {
+                return res.json(rows);
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 5000));
+        }
+        res.status(404).json({ message: "Data not available yet!" });
     } catch (error) {
         console.error("Error retrieving data:", error)
         res.status(500).send("Error retrieving data")
@@ -86,33 +114,6 @@ app.post("/add", async (req, res) => {
     } catch (error) {
         console.error("Error writing formula:", error.message, error.stack)
         res.status(500).send("Failed to write formula.")
-    }
-})
-
-app.get("/historical", async (req, res) => {
-    try {
-        const spreadsheetId = "1515_6T0FgnIY-cz5vVVxnnUpSmas7jsn8ECJ7RqdjvA"
-        const range = "Tab2!A:B"
-        let response
-
-        for (let attempt = 0; attempt < 3; attempt++) {
-            response = await sheets.spreadsheets.values.get({
-                spreadsheetId,
-                range,
-            })
-
-            const rows = response.data.values
-
-            if (rows && rows[0] && rows[0][0] !== '') {
-                return res.json(rows);
-            }
-
-            await new Promise(resolve => setTimeout(resolve, 5000));
-        }
-        res.status(404).json({ message: "Data not available yet!" });
-    } catch (error) {
-        console.error("Error retrieving data:", error)
-        res.status(500).send("Error retrieving data")
     }
 })
 

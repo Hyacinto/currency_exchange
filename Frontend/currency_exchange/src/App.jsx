@@ -2,16 +2,23 @@ import './App.css'
 import { useState, useEffect } from 'react'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
+import { Line } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js"
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 function App() {
   const [countryList, setCountryList] = useState([])
   const [selectedCountry, setSelectedCountry] = useState("")
   const [selectedCountryData, setSelectedCountryData] = useState(null)
+
   const [base, setBase] = useState("")
   const [against, setAgainst] = useState("")
   const [historical, setHistorical] = useState([])
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
+  const [isLoading, setIsLoading] = useState(false)
+  const [isChartVisible, setIsChartVisible] = useState(false)
 
 
   useEffect(() => {
@@ -56,7 +63,7 @@ function App() {
 
   const addFormula = async () => {
     const formulaData = {
-      values: `=GOOGLEFINANCE("CURRENCY:${base}${against}";"price";DATE(${startDate.getFullYear()};${startDate.getMonth() + 1};${startDate.getDay()});DATE(${endDate.getFullYear()};${endDate.getMonth() + 1};${endDate.getDay()});"DAILY")`
+      values: `=GOOGLEFINANCE("CURRENCY:${base}${against}";"price";DATE(${startDate.getFullYear()};${startDate.getMonth() + 1};${startDate.getDate()});DATE(${endDate.getFullYear()};${endDate.getMonth() + 1};${endDate.getDate()});"DAILY")`
     }
 
     try {
@@ -80,15 +87,21 @@ function App() {
 
   const fetchHistoricalData = async () => {
     try {
+      setIsLoading(true)
       const response = await fetch(`http://localhost:5000/historical`)
       if (!response.ok) throw new Error("Historical data not found")
       const result = await response.json()
       setHistorical(result)
+      setIsChartVisible(true)
     } catch (error) {
       console.error("Error fetching data:", error)
       setHistorical(null)
+      setIsChartVisible(false)
+    } finally {
+      setIsLoading(false)
     }
   }
+
 
   const handleSelectChangeBase = (event) => {
     setBase(event.target.value)
@@ -115,7 +128,34 @@ function App() {
   temp.shift()
   closeString.shift()
   const date = temp.map(d => d.slice(0, 10))
-  const close = closeString.map(c => parseFloat(c));
+  const close = closeString.map(c => parseFloat(c))
+
+  const dataChart = {
+    labels: date,
+    datasets: [
+      {
+        label: "Exchange Rate",
+        data: close,
+        fill: false,
+        backgroundColor: "rgba(0, 0, 255, 0.2)",
+        borderColor: "blue",
+        borderWidth: 2,
+      },
+    ],
+  }
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Currency Exchange Rate",
+      },
+    },
+  }
 
   return (
     <>
@@ -191,6 +231,18 @@ function App() {
             dateFormat="yyyy/MM/dd"
           />
         </div>
+        <div>
+          <button onClick={chartData}>Show me the chart!</button>
+        </div>
+        <div style={{ display: 'block', boxSizing: 'border-box', height: '400px', width: '900px' }}>
+          {isChartVisible ? (isLoading ? (
+            <div className="loading">Loading...</div>
+          ) : (
+            <Line data={dataChart} options={options} />
+          )) : (
+            <h3>I need tickers and dates...</h3>
+          )}
+        </div >
       </div>
     </>
   )
