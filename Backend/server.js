@@ -65,6 +65,57 @@ app.get("/:searchValue", async (req, res) => {
     }
 })
 
+app.post("/add", async (req, res) => {
+    try {
+        const spreadsheetId = "1515_6T0FgnIY-cz5vVVxnnUpSmas7jsn8ECJ7RqdjvA"
+        const range = "Tab2!A1"
+        const formula = {
+            values: [
+                [req.body.values]
+            ]
+        }
+
+        await sheets.spreadsheets.values.update({
+            spreadsheetId,
+            range,
+            valueInputOption: "USER_ENTERED",
+            resource: formula,
+        })
+
+        res.send("Formula added successfully.")
+    } catch (error) {
+        console.error("Error writing formula:", error.message, error.stack)
+        res.status(500).send("Failed to write formula.")
+    }
+})
+
+app.get("/historical", async (req, res) => {
+    try {
+        const spreadsheetId = "1515_6T0FgnIY-cz5vVVxnnUpSmas7jsn8ECJ7RqdjvA"
+        const range = "Tab2!A:B"
+        let response
+
+        for (let attempt = 0; attempt < 3; attempt++) {
+            response = await sheets.spreadsheets.values.get({
+                spreadsheetId,
+                range,
+            })
+
+            const rows = response.data.values
+
+            if (rows && rows[0] && rows[0][0] !== '') {
+                return res.json(rows);
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 5000));
+        }
+        res.status(404).json({ message: "Data not available yet!" });
+    } catch (error) {
+        console.error("Error retrieving data:", error)
+        res.status(500).send("Error retrieving data")
+    }
+})
+
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`)
 })
