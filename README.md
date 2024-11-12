@@ -66,7 +66,7 @@ This will run the React app on http://localhost:5173.
 3. Install backend dependencies:
     ```shell
     npm install
-4. Add the Google Sheets API credential to .env.example file in the backend folder, then rename it to .env.
+4. Add the Google Sheets API credentials to .env.example file in the backend folder, then rename it to .env.
 
 5. Start the server:
     ```shell
