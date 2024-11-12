@@ -131,28 +131,54 @@ function App() {
   const close = closeString.map(c => parseFloat(c))
 
   const dataChart = {
+    type: 'line',
     labels: date,
     datasets: [
       {
-        label: "Exchange Rate",
         data: close,
-        fill: false,
-        backgroundColor: "rgba(0, 0, 255, 0.2)",
-        borderColor: "blue",
-        borderWidth: 2,
+        pointRadius: 0,
+        borderColor: 'blue',
+        borderWidth: 0.8,
       },
     ],
   }
 
   const options = {
+    maintainAspectRatio: false,
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        display: false,
       },
-      title: {
-        display: true,
-        text: "Currency Exchange Rate",
+    },
+    scales: {
+      x: {
+        grid: {
+          color: 'black',
+          lineWidth: 0.5,
+        },
+        ticks: {
+          color: 'black',
+        },
+        title: {
+          display: true,
+          text: 'Date',
+          color: 'black',
+        },
+      },
+      y: {
+        grid: {
+          color: 'black',
+          lineWidth: 0.5,
+        },
+        ticks: {
+          color: 'black',
+        },
+        title: {
+          display: true,
+          text: 'Exchange Rate',
+          color: 'black',
+        },
       },
     },
   }
