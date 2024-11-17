@@ -58,7 +58,11 @@ function App() {
   }
 
   countryList.shift()
-  const tickers = [...new Set(countryList.map(innerArray => innerArray[2]))]
+  const tickers = [...new Set(
+    countryList
+      .map(innerArray => innerArray[2])
+      .filter(ticker => ticker !== "N/A")
+  )];
 
 
   const addFormula = async () => {

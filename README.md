@@ -32,55 +32,43 @@ Setup and Installation
 
 *   Node.js and npm
     
+*   Docker and Docker Compose
+
 *   Google Cloud Project with Sheets API enabled
     
 *   Google Sheets API credentials (client ID, API key)
     
 
-### Frontend Setup
+### Docker Setup
 
-1. Open a terminal.
+This application includes [Docker](https://www.docker.com/) support for both the backend and frontend services. Ensure Docker is installed and running on your system.
 
-2. Clone the repository:
+#### Building and Running the Docker Containers
+
+1. **Clone the repository**:
    ```shell
    git clone <repo_url>
    cd <project_folder>
-3. Navigate to the Frontens folder:
-    ```shell
-    cd Frontend
-4. Install the required dependencies:
-    ```shell
-    npm install
-5. Start the development server:
-    ```shell
-    npm run dev
-This will run the React app on http://localhost:5173.
+   ```
 
-### Backend Setup
+2. **Contact the project maintainer to receive valid API keys**. Once you have the keys, add them to the `.env.sample` file in the project root and rename the file to `.env`.
 
-1. Open a new terminal window
+3. **Run the containers using Docker Compose**:
+   ```shell
+   docker-compose up --build
+   ```
 
-2. Navigate to the server folder:
-    ```shell
-    cd backend
-3. Install backend dependencies:
-    ```shell
-    npm install
-4. Add the Google Sheets API credentials to .env.example file in the backend folder, then rename it to .env.
-
-5. Start the server:
-    ```shell
-    node start
-The server will run on http://localhost:5000.
+   This will start both the backend and frontend services. The app will be available at http://localhost:3000.
 
 ### API Endpoints
 
-GET /data: Fetches a list of countries and their currency details from Google Sheets.
-POST /add: Adds a Google Finance formula to the Google Sheet for fetching currency exchange rates.
-GET /historical: Fetches historical exchange rate data from Google Sheets.
+*   **GET /data**: Fetches a list of countries and their currency details from Google Sheets.
+*   **POST /add**: Adds a Google Finance formula to the Google Sheet for fetching currency exchange rates.
+*   **GET /historical**: Fetches historical exchange rate data from Google Sheets.
 
 ### Usage
 
-Select a Country: Choose a country from the dropdown to view its exchange rates.
-View Currency Exchange Rates: The app will display exchange rates between the selected country's currency and USD, EUR, GBP, and CHF.
-View Historical Data: Choose a base currency, a target currency, and a date range, then click "Show me the chart!" to visualize the historical exchange rate data.
+*   **Select a Country**: Choose a country from the dropdown to view its exchange rates.
+*   **View Currency Exchange Rates**: The app will display exchange rates between the selected country's currency and USD, EUR, GBP, and CHF.
+*   **View Historical Data**: Choose a base currency, a target currency, and a date range, then click "Show me the chart!" to visualize the historical exchange rate data.
+
