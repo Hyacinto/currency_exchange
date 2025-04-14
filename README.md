@@ -1,29 +1,39 @@
 Currency Exchange Rate App
 ==========================
 
+![Frontend](pic03.jpg)
+
 This application allows users to view current and historical currency exchange rates. The app fetches data from Google Sheets using the Google Sheets API, dynamically updates currency rates, and displays them in a chart using Chart.js.
 
 Features
 --------
 
 *   **Select Country**: Choose a country to view currency details like exchange rates with USD, EUR, GBP, and CHF.
-    
-*   **Historical Data**: Select base and target currencies, choose a date range, and visualize historical exchange rate data in a line chart.
-    
-*   **Google Sheets Integration**: The app adds a Google Finance formula to a Google Sheet for real-time currency data retrieval.
-    
 
-Technologies
+*   **Historical Data**: Select base and target currencies, choose a date range, and visualize historical exchange rate data in a line chart.
+
+*   **Google Sheets Integration**: The app adds a Google Finance formula to a Google Sheet for real-time currency data retrieval.
+
+
+## Technologies
 ------------
 
-*   **Frontend**: React, React DatePicker, Chart.js
-    
-*   **Backend**: Express.js
-    
-*   **Database**: Google Sheets API for storing and retrieving data
-    
-*   **API Integration**: Google Sheets API, Google Finance
-    
+**Frontend**
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![React Datepicker](https://img.shields.io/badge/React%20DatePicker-FF69B4?style=for-the-badge&logo=react&logoColor=white)](https://reactdatepicker.com/)
+[![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)
+
+**Backend**
+[![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+
+**Database**
+[![Google Sheets API](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)](https://developers.google.com/sheets/api)
+
+**API Integration**
+[![Google Sheets API](https://img.shields.io/badge/Google%20Sheets%20API-34A853?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/sheets/api)
+[![Google Finance](https://img.shields.io/badge/Google%20Finance-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://www.google.com/finance)
+
+
 
 Setup and Installation
 ----------------------
@@ -31,13 +41,13 @@ Setup and Installation
 ### Prerequisites
 
 *   Node.js and npm
-    
+
 *   Docker and Docker Compose
 
 *   Google Cloud Project with Sheets API enabled
-    
+
 *   Google Sheets API credentials (client ID, API key)
-    
+
 
 ### Docker Setup
 
