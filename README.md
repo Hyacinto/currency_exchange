@@ -19,17 +19,22 @@ Features
 ------------
 
 **Frontend**
+
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![React Datepicker](https://img.shields.io/badge/React%20DatePicker-FF69B4?style=for-the-badge&logo=react&logoColor=white)](https://reactdatepicker.com/)
 [![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)
 
 **Backend**
+
 [![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 
 **Database**
+
 [![Google Sheets API](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)](https://developers.google.com/sheets/api)
 
 **API Integration**
+
 [![Google Sheets API](https://img.shields.io/badge/Google%20Sheets%20API-34A853?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/sheets/api)
 [![Google Finance](https://img.shields.io/badge/Google%20Finance-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://www.google.com/finance)
 
